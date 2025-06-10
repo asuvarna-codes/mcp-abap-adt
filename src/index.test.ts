@@ -1,5 +1,5 @@
 import { after } from 'node:test';
-import { mcp_abap_adt_server } from './index';
+import { ABAPAdtMcpServer } from './server';
 import { handleGetProgram } from './handlers/handleGetProgram';
 import { handleGetClass } from './handlers/handleGetClass';
 import { handleGetFunctionGroup } from './handlers/handleGetFunctionGroup';
@@ -15,12 +15,12 @@ import { handleGetTransaction } from './handlers/handleGetTransaction';
 import { handleSearchObject } from './handlers/handleSearchObject';
 import { cleanup } from './lib/utils';
 
-describe('mcp_abap_adt_server - Integration Tests', () => {
-  let server: mcp_abap_adt_server;
+describe('ABAPAdtMcpServer - Integration Tests', () => {
+  let server: ABAPAdtMcpServer;
 
   beforeAll(() => {
     // Initialize the server instance once before all tests
-    server = new mcp_abap_adt_server();
+    server = new ABAPAdtMcpServer();
   });
 
   afterAll(async () => {

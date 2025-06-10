@@ -6,7 +6,11 @@ export async function handleGetInterface(args: any) {
         if (!args?.interface_name) {
             throw new McpError(ErrorCode.InvalidParams, 'Interface name is required');
         }
-        const url = `${await getBaseUrl()}/sap/bc/adt/oo/interfaces/${args.interface_name}/source/main`;
+
+        // URL-encode the interface_name
+        const encodedInterfaceName = encodeURIComponent(args.interface_name);
+
+        const url = `${await getBaseUrl()}/sap/bc/adt/oo/interfaces/${encodedInterfaceName}/source/main`;
         const response = await makeAdtRequest(url, 'GET', 30000);
         return return_response(response);
     } catch (error) {
