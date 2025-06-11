@@ -24,9 +24,8 @@ import { handleGetTypeInfo } from './handlers/handleGetTypeInfo';
 import { handleGetInterface } from './handlers/handleGetInterface';
 import { handleGetTransaction } from './handlers/handleGetTransaction';
 import { handleSearchObject } from './handlers/handleSearchObject';
+import { handleGetCDSView } from './handlers/handleGetCDSView';
 
-// Import shared utility functions and types
-// import { getBaseUrl, getAuthHeaders, createAxiosInstance, makeAdtRequest, return_error, return_response } from './lib/utils';
 
 // Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -192,6 +191,20 @@ export class ABAPAdtMcpServer {
             }
           },
           {
+            name: 'GetCDSView',
+            description: 'Retrieve ABAP CDS View structure',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                cds_view_name: {
+                  type: 'string',
+                  description: 'Name of the ABAP CDS View'
+                }
+              },
+              required: ['cds_view_name']
+            }
+          },
+          {
             name: 'GetTableContents',
             description: 'Retrieve contents of an ABAP table',
             inputSchema: {
@@ -318,6 +331,8 @@ export class ABAPAdtMcpServer {
           return await handleGetStructure(request.params.arguments);
         case 'GetTable':
           return await handleGetTable(request.params.arguments);
+        case 'GetCDSView':
+          return await handleGetCDSView(request.params.arguments);
         case 'GetTableContents':
           return await handleGetTableContents(request.params.arguments);
         case 'GetPackage':

@@ -13,6 +13,7 @@ import { handleGetTypeInfo } from './handlers/handleGetTypeInfo';
 import { handleGetInterface } from './handlers/handleGetInterface';
 import { handleGetTransaction } from './handlers/handleGetTransaction';
 import { handleSearchObject } from './handlers/handleSearchObject';
+import { handleGetCDSView } from './handlers/handleGetCDSView';
 import { cleanup } from './lib/utils';
 
 describe('ABAPAdtMcpServer - Integration Tests', () => {
@@ -73,6 +74,16 @@ describe('ABAPAdtMcpServer - Integration Tests', () => {
   describe('handleGetTable', () => {
     it('should successfully retrieve table details', async () => {
       const result = await handleGetTable({ table_name: 'DD02L' });
+      expect(result.isError).toBe(false);
+      expect(Array.isArray(result.content)).toBe(true);
+      expect(result.content.length).toBeGreaterThan(0);
+      expect(result.content[0].type).toBe('text');
+    });
+  });
+
+  describe('handleGetCDSView', () => {
+    it('should successfully retrieve CDS View details', async () => {
+      const result = await handleGetCDSView({ cds_view_name: 'I_PRODUCT' });
       expect(result.isError).toBe(false);
       expect(Array.isArray(result.content)).toBe(true);
       expect(result.content.length).toBeGreaterThan(0);
